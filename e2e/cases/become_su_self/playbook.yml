@@ -1,0 +1,12 @@
+# playbook.yaml
+- hosts: all
+  tasks:
+    - name: become self
+      become: yes
+      become_user: sshtest
+      become_method: sudo
+      shell: |
+        touch /tmp/b
+        stat -c %U /tmp/b >> /tmp/b
+      args:
+        creates: /tmp/b

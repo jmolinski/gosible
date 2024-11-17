@@ -1,0 +1,20 @@
+version: "3"
+# docker-compose.yml for debug purposes
+
+services:
+  managed:
+    build:
+      context: ./../../..
+      dockerfile: ./e2e/assets/dockerfiles/os/ubuntu.dockerfile
+  ctrl:
+    build:
+      context: ./../../..
+      dockerfile: ./e2e/assets/dockerfiles/ansible.dockerfile
+  diff:
+    build:
+      context: ./../../..
+      dockerfile: ./e2e/assets/dockerfiles/diff.dockerfile
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock

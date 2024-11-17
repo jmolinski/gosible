@@ -1,0 +1,15 @@
+# playbook.yaml
+- hosts: all
+  tasks:
+    - name: download yq
+      get_url:
+        url: https://github.com/mikefarah/yq/releases/download/2.1.2/yq_linux_amd64
+        dest: /tmp/yq
+        mode: '0755'
+    - name: move yq to PATH
+      shell: |
+        mkdir -p $HOME/bin
+        mv /tmp/yq $HOME/bin/yq
+        chmod +x $HOME/bin/yq
+      args:
+        creates: /usr/local/bin/yq

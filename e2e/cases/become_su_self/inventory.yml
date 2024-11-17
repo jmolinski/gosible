@@ -1,0 +1,7 @@
+all:
+  hosts:
+    managed:
+      ansible_user: sshtest
+      ansible_private_key_file: /root/.ssh/id_rsa
+      ansible_host : managed
+      ansible_become_password: become

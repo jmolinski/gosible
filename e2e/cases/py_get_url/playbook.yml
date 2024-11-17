@@ -1,0 +1,8 @@
+# playbook.yaml
+- hosts: all
+  tasks:
+    - name: download yq
+      get_url:
+        url: https://github.com/mikefarah/yq/releases/download/2.1.2/yq_linux_amd64
+        dest: /tmp/yq
+        mode: '0755'

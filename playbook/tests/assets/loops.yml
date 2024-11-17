@@ -1,0 +1,16 @@
+- name: Loops
+  gather_facts: false
+  hosts: shared
+  tasks:
+
+    - name: debug 1 task
+      debug:
+        msg: {{ item }}
+      loop:
+        - "one"
+        - "two"
+
+    - name: debug 2 task
+      debug:
+        msg: {{ item }}
+      loop: "{{ lookup('sequence', 'end=42 start=2 step=2') }}"

@@ -1,0 +1,7 @@
+group:
+  hosts:
+    host:
+      foo: "42"
+  vars:
+    foo: "6"
+    bar: "9"

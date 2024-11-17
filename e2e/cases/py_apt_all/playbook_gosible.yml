@@ -1,0 +1,21 @@
+# playbook.yaml
+- hosts: all
+  tasks:
+    - name: Install gpg
+      py_apt:
+        name: gpg
+
+    - name: Add a yq apt key
+      py_apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: CC86BB64
+
+    - name: Add specified yq repo
+      py_apt_repository:
+        repo: ppa:rmescandon/yq
+
+    - name: Update cache and install yq
+      py_apt:
+        name: yq
+        update_cache: yes
+

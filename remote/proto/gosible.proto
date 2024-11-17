@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "github.com/scylladb/gosible/remote/proto";
+package gosible.proto;
+
+service GosibleClient {
+  rpc ExecuteModule(ExecuteModuleRequest) returns (ExecuteModuleReply) {}
+}
+
+message ExecuteModuleRequest {
+  string moduleName = 1;
+  bytes varsJson = 2;
+  MetaArgs metaArgs = 3;
+}
+message ExecuteModuleReply {
+  bytes returnValueJson = 1;
+}
+
+message MetaArgs {
+  string pythonInterpreter = 1;
+  bytes pyRuntimeZipData = 2;
+}

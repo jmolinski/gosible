@@ -1,0 +1,34 @@
+name: E2e test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  go-test:
+    name: E2e tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set Go version
+        run: |
+          echo "GOVERSION=$(cat .go-version)" >> $GITHUB_ENV
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        id: go
+        with:
+          go-version: "${{env.GOVERSION}}"
+
+      - name: E2e Build
+        run: |
+          make e2e-build
+
+      - name: E2e Tests
+        run: |
+          make e2e-test

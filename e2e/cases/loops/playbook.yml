@@ -1,0 +1,30 @@
+- hosts: all
+  tasks:
+    - name: loop with explicit compact list
+      shell: echo "{{ item }}" > /home/sshtest/1-{{ item }}.txt
+      loop: [1, 2, 3]
+
+    - name: loop with explicit long list
+      shell: echo "{{ item }}" > /home/sshtest/2-{{ item }}.txt
+      loop:
+        - "{{ 1 + 2 }}"
+        - 1
+        - 2
+
+    - name: loop with lookup plugin
+      shell: echo "{{ item }}" > /home/sshtest/3-{{ item }}.txt
+      loop: "{{ lookup('sequence', 'start=1 end=3 stride=1', wantlist=True) }}"
+
+    - name: loop with query
+      shell: echo "{{ item }}" > /home/sshtest/4-{{ item }}.txt
+      loop: "{{ query('sequence', 'start=1 end=3 stride=1') }}"
+
+    - name: loop with with_lookup single string
+      shell: echo "{{ item }}" > /home/sshtest/5-{{ item }}.txt
+      with_sequence: start=1 end=3 stride=1
+
+    - name: loop with with_lookup list of strings
+      shell: echo "{{ item }}" > /home/sshtest/6-{{ item }}.txt
+      with_sequence:
+        - start=1 end=3 stride=1
+        - start=5 end={{ 5 + 5 }} stride=2

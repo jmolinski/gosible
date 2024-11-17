@@ -1,0 +1,9 @@
+bin/**
+!bin/.gitkeep
+!bin/remote/.gitkeep
+.git
+.githooks
+e2e/cases
+e2e/cases_smoke
+e2e/logs
+e2e/assets/defaults

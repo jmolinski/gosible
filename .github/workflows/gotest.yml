@@ -1,0 +1,38 @@
+name: Go test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  go-test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set Go version
+        run: |
+          echo "GOVERSION=$(cat .go-version)" >> $GITHUB_ENV
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        id: go
+        with:
+          go-version: "${{env.GOVERSION}}"
+
+      - name: Build
+        run: |
+          make build
+
+      - name: Unit Tests
+        run: |
+          make unit-test
+
+      - name: Check Lint
+        run: |
+          make check-lint

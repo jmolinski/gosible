@@ -1,0 +1,38 @@
+- hosts: all
+  tasks:
+    - name: when condition false
+      shell: echo "1" > /home/sshtest/1-1.txt
+      when: 1 == 5
+
+    - name: when condition true
+      shell: echo "2" > /home/sshtest/2-1.txt
+      when: 1 != 5
+
+    - name: when condition with variable, no braces
+      shell: echo "1" > /home/sshtest/3-1.txt
+      when: some[1] == 2
+      vars:
+        some: [1,2,3]
+
+    - name: when condition with variable, with braces
+      shell: echo "1" > /home/sshtest/4-1.txt
+      when: "{{ some[1] == 2 }}"
+      vars:
+        some: [1,2,3]
+
+    - name: when with loop
+      shell: echo "{{ item }}" > /home/sshtest/5-{{ item }}.txt
+      loop: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      when: item > 5
+
+    - name: when with multiple conditions - true
+      shell: echo "1" > /home/sshtest/6-1.txt
+      when:
+        - 1 < 2
+        - 3 > 2
+
+    - name: when with multiple conditions - false
+      shell: echo "2" > /home/sshtest/6-2.txt
+      when:
+        - 1 < 2
+        - 3 < 2

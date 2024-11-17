@@ -1,0 +1,6 @@
+all:
+  hosts:
+    managed:
+      ansible_user: root
+      ansible_private_key_file: /root/.ssh/id_rsa
+      ansible_host : managed

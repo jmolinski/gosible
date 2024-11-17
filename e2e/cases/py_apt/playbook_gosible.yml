@@ -1,0 +1,59 @@
+# playbook.yaml
+- hosts: all
+  tasks:
+    - name: Update repositories cache and install "bat" package
+      py_apt:
+        name: bat
+        update_cache: yes
+
+    - name: Remove "bat" package
+      py_apt:
+        name: bat
+        state: absent
+
+    - name: Install a list of packages
+      py_apt:
+        pkg:
+          - lz4
+          - sl
+
+    - name: Install the version '1.1-8build1' of package "minizip"
+      py_apt:
+        name: minizip=1.1-8build1
+
+    - name: Update all packages to their latest version
+      py_apt:
+        name: "*"
+        state: latest
+
+    - name: Upgrade the OS (apt-get dist-upgrade)
+      py_apt:
+        upgrade: dist
+
+    - name: Run the equivalent of "apt-get update" as a separate step
+      py_apt:
+        update_cache: yes
+
+    - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+      py_apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Pass options to dpkg on run
+      py_apt:
+        upgrade: dist
+        update_cache: yes
+        dpkg_options: 'force-confold,force-confdef'
+
+    - name: Install a .deb package from the internet
+      py_apt:
+        deb: http://archive.ubuntu.com/ubuntu/pool/universe/c/cowsay/cowsay_3.03+dfsg2-7_all.deb
+        allow_downgrade: yes
+
+    - name: Remove useless packages from the cache
+      py_apt:
+        autoclean: yes
+
+    - name: Remove dependencies that are no longer required
+      py_apt:
+        autoremove: yes

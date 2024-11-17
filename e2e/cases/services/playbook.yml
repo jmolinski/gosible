@@ -1,0 +1,22 @@
+# playbook.yaml
+- hosts: all
+  tasks:
+  - name: Start service procps, if not started
+    service:
+      name: procps
+      state: started
+
+  - name: Stop service procps, if started
+    service:
+      name: procps
+      state: stopped
+
+  - name: Restart service procps, in all cases
+    service:
+      name: procps
+      state: restarted
+
+  - name: Enable service procps, and not touch the state
+    service:
+      name: procps
+      enabled: true

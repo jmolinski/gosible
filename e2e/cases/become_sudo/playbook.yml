@@ -1,0 +1,29 @@
+# playbook.yaml
+- hosts: all
+  tasks:
+    - name: normal user
+      shell: |
+        touch /tmp/a
+        stat -c %U /tmp/a >> /tmp/a
+      args:
+        creates: /tmp/a
+
+    - name: become user
+      become: yes
+      become_user: become
+      become_method: sudo
+      shell: |
+        touch /tmp/b
+        stat -c %U /tmp/b >> /tmp/b
+      args:
+        creates: /tmp/b
+
+    - name: become user 2
+      become: yes
+      become_user: become
+      become_method: sudo
+      shell: |
+        touch /tmp/c
+        stat -c %U /tmp/c >> /tmp/c
+      args:
+        creates: /tmp/c
